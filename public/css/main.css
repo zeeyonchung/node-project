@@ -23,15 +23,15 @@ body {
 	padding: 0;
 }
 
+a {
+          text-decoration: none;
+}
+
 header {
 	color: #00BCD4;
 	height: 56px;
 	margin: 0 0 14px 0;
 	text-align: center;
-}
-
-p {
-	margin: 8px 0 0 0;
 }
 
 .container p {
@@ -78,7 +78,7 @@ header a ~ p {
 /****** Login Styling ******/
 
 .login {
-	margin: 86px auto 0 auto;
+	margin: 50px auto 0 auto;
 	text-align: center;
 }
 
@@ -88,7 +88,7 @@ header a ~ p {
 }
 
 .btn p {
-	margin: 8px 0 0 0;
+	margin: 10px 0;
 	padding: 0;
 }
 
@@ -104,12 +104,13 @@ img {
 	display: block;
 }
 
-.clementine-text { /* Styling for the Clementine.js text */
+.title-text {
 	padding: 0;
-	margin: -25px 0 0 0;
+	margin: 0 0 13px 0;
 	font-weight: 500;
-	font-size: 60px;
-	color: #FFA000;
+	font-size: 40px;
+	color: #8e8e8e;
+	font-family: cursive;
 }
 
 /****** Click Styling ******/

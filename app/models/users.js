@@ -8,10 +8,15 @@ var User = new Schema({
 		id: String,
 		displayName: String,
 		username: String,
-      publicRepos: Number
+        publicRepos: Number
 	},
-   nbrClicks: {
-      clicks: Number
+	facebook: {
+	    id: String,
+	    displayName: String,
+	    username: String
+	},
+    nbrClicks: {
+        clicks: Number
    }
 });
 

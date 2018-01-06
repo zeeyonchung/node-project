@@ -19,9 +19,12 @@
     "boilerplate"
   ],
   "scripts": {
-  "start": "node server.js"
+    "start": "node server.js"
   },
-  "author": "Blake Johnston",
+  "author": [
+    "Zeeyon Chung",
+    "Blake Johnston"
+  ],
   "license": "MIT",
   "dependencies": {
     "dotenv": "^1.2.0",
@@ -29,6 +32,7 @@
     "express-session": "^1.11.3",
     "mongoose": "^4.1.0",
     "passport": "^0.3.0",
+    "passport-facebook": "^2.1.1",
     "passport-github": "^1.0.0"
   }
 }

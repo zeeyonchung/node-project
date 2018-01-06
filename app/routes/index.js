@@ -50,6 +50,17 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 
+	app.route('/auth/facebook')
+		.get(passport.authenticate('facebook'));
+		
+	app.route('/auth/facebook/callback')
+		.get(passport.authenticate('facebook', {
+			failureRedirect: '/login',
+			function(req, res) {
+			          res.redirect('/');
+			}
+		}));
+
 	app.route('/api/:id/clicks')
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)
