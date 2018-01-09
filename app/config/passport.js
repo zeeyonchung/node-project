@@ -58,7 +58,7 @@ module.exports = function (passport) {
 		callbackURL: configAuth.facebookAuth.callbackURL,
 		passReqToCallback: true
 	},
-	function (token, refreshToken, profile, done) {
+	function (req, token, refreshToken, profile, done) {
 		process.nextTick(function () {
 			User.findOne({ 'facebook.id': profile.id }, function (err, user) {
 				if (err) {
@@ -69,7 +69,7 @@ module.exports = function (passport) {
 					return done(null, user);
 				} else {
 					var newUser = new User();
-
+                                                  
 					newUser.facebook.id = profile.id;
 					newUser.facebook.username = profile.username;
 					newUser.facebook.displayName = profile.displayName;

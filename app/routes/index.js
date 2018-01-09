@@ -2,6 +2,7 @@
 
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var VoteHandler = require(path + '/app/controllers/voteHandler.server.js');
 
 module.exports = function (app, passport) {
 
@@ -14,11 +15,10 @@ module.exports = function (app, passport) {
 	}
 
 	var clickHandler = new ClickHandler();
+	var voteHandler = new VoteHandler();
 
 	app.route('/')
-		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/index.html');
-		});
+          	.get(isLoggedIn, voteHandler.getVotes);
 
 	app.route('/login')
 		.get(function (req, res) {
@@ -38,7 +38,7 @@ module.exports = function (app, passport) {
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
+			res.json(req.user);
 		});
 
 	app.route('/auth/github')
@@ -55,14 +55,26 @@ module.exports = function (app, passport) {
 		
 	app.route('/auth/facebook/callback')
 		.get(passport.authenticate('facebook', {
-			failureRedirect: '/login',
-			function(req, res) {
-			          res.redirect('/');
-			}
+			successRedirect: '/',
+			failureRedirect: '/login'
 		}));
 
 	app.route('/api/:id/clicks')
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)
 		.delete(isLoggedIn, clickHandler.resetClicks);
+		
+          /*
+          * for Voting App
+          */
+          app.route('/vote/new')
+		.get(isLoggedIn, function (req, res) {
+			res.sendFile(path + '/public/vote/new.html');
+		});
+          
+          app.route('/vote/add')
+		.get(isLoggedIn, voteHandler.addVote);
 };
+
+
+// http://expressjs.com/ko/guide/routing.html

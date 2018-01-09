@@ -34,9 +34,16 @@ header {
 	text-align: center;
 }
 
+.container {
+          text-align: center;
+}
 .container p {
 	text-align: center;
 	padding: 0;
+}
+
+.hide {
+          display: none;
 }
 
 /****** Header Styling ******/
