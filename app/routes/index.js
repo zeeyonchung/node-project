@@ -74,6 +74,9 @@ module.exports = function (app, passport) {
           
           app.route('/vote/add')
 		.get(isLoggedIn, voteHandler.addVote);
+		
+	app.route('/vote/show/:id')
+		.get(isLoggedIn, voteHandler.getVote);
 };
 
 

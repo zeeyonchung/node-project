@@ -22,11 +22,7 @@
                               <a class="menu" href="#">MY POLL</a>
 	          </div>
 	          <div class="container">
-	                    <% for (var i = 0; i < data.length; i++) { %>
-	                              <div class="article">
-	                                        <a class="article-title" href="/vote/show/<%= data[i]['_id'] %>"><%= data[i].vote.title %></a>
-	                              </div>
-	                    <% } %>
+	                    <%= data %>
 	          </div>
 	          
 		<script type="text/javascript" src="common/ajax-functions.js"></script>
