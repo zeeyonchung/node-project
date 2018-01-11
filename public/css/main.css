@@ -21,10 +21,11 @@ body {
 	font-size: 16px;
 	margin: 0;
 	padding: 0;
+	text-align: center;
 }
 
 a {
-          text-decoration: none;
+		  text-decoration: none;
 }
 
 header {
@@ -35,7 +36,7 @@ header {
 }
 
 .container {
-          text-align: center;
+		  text-align: center;
 }
 .container p {
 	text-align: center;
@@ -43,7 +44,7 @@ header {
 }
 
 .hide {
-          display: none;
+		  display: none;
 }
 
 /****** Header Styling ******/
@@ -138,6 +139,7 @@ img {
 	padding: 10px 5px;
 	width: 100px;
 	font-weight: 500;
+
 }
 
 .btn:focus {	/* Remove outline when hovering over button */
@@ -209,4 +211,40 @@ span {
 	color: #FFFFFF;
 	display: inline;
 	margin: 0;
+}
+
+
+/*********** list ***********/
+.list .btn.title {
+	width: 65%;
+	height: 42px;
+}
+
+.list .btn {
+	color: #333;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-top: none;
+}
+
+.list .btn-default:hover {
+	color: #333;
+	background-color: #e6e6e6;
+	border-color: #adadad;
+}
+
+.list .btn:active {
+	transform: unset;
+	-webkit-transform: unset;
+}
+
+.list .article:first-of-type .btn {
+	border-top: 1px solid #ccc;
+}
+
+/*********** show ***********/
+.show select {
+	display: block;
+	width: 20%;
+	margin: 0 auto;
 }

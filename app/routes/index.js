@@ -18,7 +18,7 @@ module.exports = function (app, passport) {
 	var voteHandler = new VoteHandler();
 
 	app.route('/')
-          	.get(isLoggedIn, voteHandler.getVotes);
+			.get(voteHandler.getVotes);
 
 	app.route('/login')
 		.get(function (req, res) {
@@ -52,7 +52,7 @@ module.exports = function (app, passport) {
 
 	app.route('/auth/facebook')
 		.get(passport.authenticate('facebook'));
-		
+
 	app.route('/auth/facebook/callback')
 		.get(passport.authenticate('facebook', {
 			successRedirect: '/',
@@ -63,20 +63,23 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)
 		.delete(isLoggedIn, clickHandler.resetClicks);
-		
-          /*
-          * for Voting App
-          */
-          app.route('/vote/new')
+
+	/*
+	* for Voting App
+	*/
+	app.route('/vote/new')
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/vote/new.html');
 		});
-          
-          app.route('/vote/add')
+
+	app.route('/vote/add')
 		.get(isLoggedIn, voteHandler.addVote);
-		
+
 	app.route('/vote/show/:id')
-		.get(isLoggedIn, voteHandler.getVote);
+		.get(voteHandler.getVote);
+
+	app.route('/vote/pick')
+		.post(voteHandler.pickOneOption);
 };
 
 

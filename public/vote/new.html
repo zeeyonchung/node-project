@@ -4,23 +4,27 @@
 
 	<head>
 		<title>Voting App - ZEEYON CHUNG</title>
-		
+
+					<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
 	</head>
 
 	<body>
-	          <div class="container">
-	                    <form action="/vote/add" id="voteForm">
-	                              <input type="text" name="title">
-	                              <textarea name="options"></textarea>
-	                              <input type="hidden" id="profile-id-input" name="author">
-	                              
-	                              <input type="submit" value="MAKE!">
-	                    </form>
-	          </div>
-		
+			  <div class="container">
+						<form action="/vote/add" id="voteForm">
+								  <input type="text" name="title">
+								  <textarea name="options"></textarea>
+								  <input type="hidden" id="profile-id-input" name="author">
+
+								  <input type="submit" value="MAKE!">
+						</form>
+			  </div>
+
 		<script type="text/javascript" src="../common/ajax-functions.js"></script>
 		<script type="text/javascript" src="../controllers/userController.client.js"></script>
+
+					<script type="text/javascript" src="/js/jquery.min.js"></script>
+					<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	</body>
 
 </html>

@@ -1,14 +1,14 @@
 {
-  "name": "clementinejs-fcc",
-  "version": "1.0.1",
-  "description": "The elegant and lightweight boilerplate for full stack JavaScript.",
+  "name": "zeeyon-project",
+  "version": "1.0.0",
+  "description": "full stack JavaScript.",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johnstonbl01/clementinejs-fcc"
+    "url": "git+https://github.com/zeeyonchung/voting-app"
   },
-  "homepage": "http://www.clementinejs.com/",
-  "bugs": "https://github.com/johnstonbl01/clementinejs-fcc/issues",
+  "homepage": "http://zeeyonchung.github.io/",
+  "bugs": "",
   "keywords": [
     "MongoDB",
     "Mongoose",
@@ -22,15 +22,21 @@
     "start": "node server.js"
   },
   "author": [
-    "Zeeyon Chung",
-    "Blake Johnston"
+    "Zeeyon Chung"
   ],
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "//" : "to handle HTTP POST request. extract the entire body portion of an incoming request stream and exposes it on req.body",
+    "bootstrap": "^3.3.7",
     "dotenv": "^1.2.0",
     "ejs": "^2.5.7",
+    "//" : "template engine",
     "express": "^4.12.4",
     "express-session": "^1.11.3",
+    "jquery": "^3.2.1",
+    "jsdom": "^10.1.0",
+    "//" : "create a dummy window object which jquery can use",
     "mongoose": "^4.1.0",
     "passport": "^0.3.0",
     "passport-facebook": "^2.1.1",

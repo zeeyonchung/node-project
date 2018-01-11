@@ -5,6 +5,14 @@ var routes = require('./app/routes/index.js');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
+var bodyParser = require('body-parser');
+
+// for jquery
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+const { window } = new JSDOM(`<!DOCTYPE html>`);
+const $ = require('jquery')(window);
+
 
 var app = express();
 require('dotenv').load();
@@ -19,6 +27,9 @@ app.engine('html', require('ejs').renderFile);
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
+app.use('/js', express.static(process.cwd() + '/node_modules/jquery/dist'));
+app.use('/js', express.static(process.cwd() + '/node_modules/bootstrap/dist/js'));
+app.use('/css', express.static(process.cwd() + '/node_modules/bootstrap/dist/css'));
 
 app.use(session({
 	secret: 'secretClementine',
@@ -28,6 +39,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
 routes(app, passport);
 

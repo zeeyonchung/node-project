@@ -4,7 +4,8 @@
 
 	<head>
 		<title>Voting App - ZEEYON CHUNG</title>
-		
+
+		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
 	</head>
 
@@ -15,18 +16,71 @@
 		<a class="menu" href="/logout">Logout</a>
 	</header>
 
-	<body>
-	          <div class="container">
-                              <a class="menu" href="/vote/new">NEW POLL</a>
-                              <span>|</span>
-                              <a class="menu" href="#">MY POLL</a>
-	          </div>
-	          <div class="container">
-	                    <%= data %>
-	          </div>
-	          
-		<script type="text/javascript" src="common/ajax-functions.js"></script>
-		<script type="text/javascript" src="controllers/userController.client.js"></script>
+	<body class="show">
+		<div class="container">
+			<a class="menu" href="/vote/new">NEW POLL</a>
+			<span>|</span>
+			<a class="menu" href="#">MY POLL</a>
+		</div>
+		<div class="container">
+			<form action="/vote/pick" method="post">
+				<p><%= data %></p>
+				<h3><%= data.vote.title %></h3>
+				<input name="id" value="<%= data['_id'] %>" type="hidden">
+				<p>I'd like to vote for... :</p>
+				<select name="option" class="form-control">
+					<% for (var i = 0; i < data.vote.options.length; i++) { %>
+						<option value="<%= data.vote.options[i]['_id'] %>"><%= data.vote.options[i].name %></option>
+					<% } %>
+				</select>
+				<button type="button" class="btn" id="btn-pick">submit</button>
+
+				<div class="list-options">
+					<% for (var i = 0; i < data.vote.options.length; i++) { %>
+						<p><%= data.vote.options[i] %></p>
+					<% } %>
+				</div>
+			</form>
+		</div>
+
+		 <a href="/">back</a>
+
+		<script type="text/javascript" src="/common/ajax-functions.js"></script>
+		<script type="text/javascript" src="/controllers/userController.client.js"></script>
+
+		<script type="text/javascript" src="/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+		<script>
+			'use strict';
+
+			var params = {"id" : $("input[name=id]").val(),
+						  "option" : $("select[name=option]").val()};
+
+			$("#btn-pick").click(function(e) {
+				$.ajax({
+					type: 'POST',
+					url: '/vote/pick',
+					data: params,
+					dataType: 'JSON',
+					success: function(result) {
+						var options = result.vote.options;
+
+						$(".list-options").empty();
+
+						for (var i = 0; i < options.length; i++) {
+							console.log(options[i]);
+							$(".list-options").append('<p>' + options[i] + '</p>');
+						}
+					},
+					error: function(err) {
+						console.log(err);
+						alert('err!');
+					}
+				});
+			});
+		</script>
+
 	</body>
 
 </html>
