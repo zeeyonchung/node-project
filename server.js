@@ -7,12 +7,12 @@ var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 
-// for jquery
+/* // for jquery
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const { window } = new JSDOM(`<!DOCTYPE html>`);
 const $ = require('jquery')(window);
-
+*/
 
 var app = express();
 require('dotenv').load();

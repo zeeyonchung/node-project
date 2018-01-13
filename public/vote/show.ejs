@@ -30,7 +30,7 @@
 				<p>I'd like to vote for... :</p>
 				<select name="option" class="form-control">
 					<% for (var i = 0; i < data.vote.options.length; i++) { %>
-						<option value="<%= data.vote.options[i]['_id'] %>"><%= data.vote.options[i].name %></option>
+						<option value="<%= data.vote.options[i]._id %>"><%= data.vote.options[i].name %></option>
 					<% } %>
 				</select>
 				<button type="button" class="btn" id="btn-pick">submit</button>
@@ -54,10 +54,12 @@
 		<script>
 			'use strict';
 
-			var params = {"id" : $("input[name=id]").val(),
-						  "option" : $("select[name=option]").val()};
-
 			$("#btn-pick").click(function(e) {
+				e.stopPropagation()
+
+				var params = {"id" : $("input[name=id]").val(),
+				"option" : $("select[name=option]").val()};
+
 				$.ajax({
 					type: 'POST',
 					url: '/vote/pick',

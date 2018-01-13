@@ -57,14 +57,13 @@ function VoteHandler () {
 
 
 	this.pickOneOption = function (req, res) {
-		//console.log(req.body);
 
-		Votes
-		.findOneAndUpdate({ _id: req.body.id, 'vote.options._id': req.body.option},
-			{$inc: {'vote.options.$.count' : 1}})
-		.exec(function(err, result) {
-			if (err) { throw err; }
-
+		Votes.
+		findOneAndUpdate(
+			{_id : req.body.id, 'vote.options._id' : req.body.option},
+			{$inc : {'vote.options.$.count' : 1}})
+		.exec(function (err, result) {
+			if (err) {throw err;}
 			res.json(result);
 		});
 
