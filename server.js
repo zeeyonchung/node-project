@@ -32,7 +32,7 @@ app.use('/js', express.static(process.cwd() + '/node_modules/bootstrap/dist/js')
 app.use('/css', express.static(process.cwd() + '/node_modules/bootstrap/dist/css'));
 
 app.use(session({
-	secret: 'secretClementine',
+	secret: 'secret',
 	resave: false,
 	saveUninitialized: true
 }));

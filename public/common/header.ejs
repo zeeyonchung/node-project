@@ -1,0 +1,8 @@
+<header>
+	<% if (user) { %>
+		<p>Welcome, <span id="display-name"><%= user.facebook.displayName %></span>!</p>
+		<a class="menu" href="/profile">Profile</a>
+		<p>|</p>
+		<a class="menu" href="/logout">Logout</a>
+	<% } %>
+</header>

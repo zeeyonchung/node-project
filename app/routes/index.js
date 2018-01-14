@@ -28,7 +28,7 @@ module.exports = function (app, passport) {
 	app.route('/logout')
 		.get(function (req, res) {
 			req.logout();
-			res.redirect('/login');
+			res.redirect('/');
 		});
 
 	app.route('/profile')
@@ -69,7 +69,7 @@ module.exports = function (app, passport) {
 	*/
 	app.route('/vote/new')
 		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/vote/new.html');
+			res.render(path + '/public/vote/new', { 'user' : req.user });
 		});
 
 	app.route('/vote/add')

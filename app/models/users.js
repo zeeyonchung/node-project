@@ -8,16 +8,16 @@ var User = new Schema({
 		id: String,
 		displayName: String,
 		username: String,
-                    publicRepos: Number
+		publicRepos: Number
 	},
 	facebook: {
-	          id: String,
-	          displayName: String,
-	          username: String
-	},
-          nbrClicks: {
-                    clicks: Number
-          }
+		id: String,
+		displayName: String,
+		username: String
+	}
+	// nbrClicks: {
+	//	clicks: Number
+	// }
 });
 
 module.exports = mongoose.model('User', User);

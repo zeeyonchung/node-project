@@ -15,21 +15,21 @@
 
    ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
       var userObject = JSON.parse(data).facebook;
-      
+
       if (userObject.displayName !== null && displayName !== null) {
          updateHtmlElement(userObject, displayName, 'displayName');
-      } 
+      }
 
       if (profileId !== null) {
-         updateHtmlElement(userObject, profileId, 'id');   
+         updateHtmlElement(userObject, profileId, 'id');
       }
-      
+
       if (profileIdInput !== null) {
           profileIdInput.value = userObject.id;
       }
 
       if (profileUsername !== null) {
-         updateHtmlElement(userObject, profileUsername, 'username');   
+         updateHtmlElement(userObject, profileUsername, 'username');
       }
 
    }));

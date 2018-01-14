@@ -4,7 +4,7 @@ var Votes = require('../models/votes.js');
 
 function VoteHandler () {
 
-		this.getVotes = function (req, res) {
+	this.getVotes = function (req, res) {
 		Votes
 		.find()
 		.exec(function (err, result) {
@@ -12,7 +12,7 @@ function VoteHandler () {
 
 			//res.json(result);
 			//console.log(result);
-			res.render(process.cwd() + '/public/vote/index', { data : result });
+			res.render(process.cwd() + '/public/vote/index', { data : result, user : req.user });
 		});
 	};
 
@@ -51,7 +51,7 @@ function VoteHandler () {
 		.exec(function (err, result) {
 			if (err) { throw err; }
 
-			res.render(process.cwd() + '/public/vote/show', { data : result });
+			res.render(process.cwd() + '/public/vote/show', { data : result, user : req.user });
 		});
 	};
 
@@ -61,7 +61,8 @@ function VoteHandler () {
 		Votes.
 		findOneAndUpdate(
 			{_id : req.body.id, 'vote.options._id' : req.body.option},
-			{$inc : {'vote.options.$.count' : 1}})
+			{$inc : {'vote.options.$.count' : 1}},
+			{new: true})
 		.exec(function (err, result) {
 			if (err) {throw err;}
 			res.json(result);
