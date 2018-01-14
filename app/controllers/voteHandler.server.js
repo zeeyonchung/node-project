@@ -17,8 +17,6 @@ function VoteHandler () {
 	};
 
 
-
-
 	this.addVote = function (req, res) {
 		//console.log(req.query);
 
@@ -58,8 +56,8 @@ function VoteHandler () {
 
 	this.pickOneOption = function (req, res) {
 
-		Votes.
-		findOneAndUpdate(
+		Votes
+		.findOneAndUpdate(
 			{_id : req.body.id, 'vote.options._id' : req.body.option},
 			{$inc : {'vote.options.$.count' : 1}},
 			{new: true})
@@ -68,6 +66,28 @@ function VoteHandler () {
 			res.json(result);
 		});
 
+	};
+
+
+	this.deleteVote = function (req, res) {
+		Votes
+		.remove({ _id : req.body.id, 'vote.author' : req.body.author })
+		.exec(function (err, result) {
+			if (err) { throw err; }
+
+			res.redirect('/');
+		});
+	};
+
+
+	this.getMyVotes = function (req, res) {
+		Votes
+		.find({ 'vote.author' : req.user._id })
+		.exec(function (err, result) {
+			if (err) { throw err; }
+
+			res.render(process.cwd() + '/public/vote/my', { data : result, user : req.user });
+		});
 	};
 
 }

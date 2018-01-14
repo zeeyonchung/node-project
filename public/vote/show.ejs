@@ -13,15 +13,10 @@
 
 	<body class="show">
 		<div class="container">
-			<a class="menu" href="/vote/new">NEW POLL</a>
-			<span>|</span>
-			<a class="menu" href="#">MY POLL</a>
-		</div>
-		<div class="container">
 			<form action="/vote/pick" method="post">
 				<p><%= data %></p>
 				<h3><%= data.vote.title %></h3>
-				<input name="id" value="<%= data['_id'] %>" type="hidden">
+				<input name="id" value="<%= data._id %>" type="hidden">
 				<p>I'd like to vote for... :</p>
 				<select name="option" class="form-control">
 					<% for (var i = 0; i < data.vote.options.length; i++) { %>
@@ -38,7 +33,14 @@
 			</form>
 		</div>
 
-		 <a href="/">back</a>
+		<a href="#" onclick="location.href = document.referrer;">back</a>
+		<% if (user && user._id == data.vote.author) { %>
+			<a href="#" onclick="$('#deleteForm').submit();">delete</a>
+			<form id="deleteForm" action="/vote/delete" method="post">
+				<input name="id" value="<%= data._id %>" type="hidden">
+				<input name="author" value="<%= user._id %>" type="hidden">
+			</form>
+		<% } %>
 
 		<script type="text/javascript" src="/js/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
@@ -76,8 +78,4 @@
 		</script>
 
 	</body>
-
 </html>
-
-
-<!-- https://www.npmjs.com/package/ejs -->

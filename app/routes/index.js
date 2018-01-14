@@ -80,6 +80,12 @@ module.exports = function (app, passport) {
 
 	app.route('/vote/pick')
 		.post(voteHandler.pickOneOption);
+
+	app.route('/vote/delete')
+		.post(isLoggedIn, voteHandler.deleteVote);
+
+	app.route('/vote/my')
+		.get(voteHandler.getMyVotes);
 };
 
 

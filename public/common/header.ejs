@@ -4,5 +4,13 @@
 		<a class="menu" href="/profile">Profile</a>
 		<p>|</p>
 		<a class="menu" href="/logout">Logout</a>
-	<% } %>
+
+		<div class="container">
+			<a class="menu" href="/vote/new">NEW POLL</a>
+			<span>|</span>
+			<a class="menu" href="/vote/my">MY POLL</a>
+		</div>
+	<% } else { %>
+		<a class="menu" href="/login">Login</a>
+	<% }%>
 </header>
