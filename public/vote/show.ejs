@@ -7,6 +7,7 @@
 
 		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		<link href="https://code.highcharts.com/css/highcharts.css" rel="stylesheet" type="text/css">
 	</head>
 
 	<%- include('../common/header', { 'user' : user }); %>
@@ -24,13 +25,14 @@
 					<% } %>
 				</select>
 				<button type="button" class="btn" id="btn-pick">submit</button>
-
-				<div class="list-options">
-					<% for (var i = 0; i < data.vote.options.length; i++) { %>
-						<p><%= data.vote.options[i] %></p>
-					<% } %>
-				</div>
 			</form>
+
+			<div class="list-options">
+				<% for (var i = 0; i < data.vote.options.length; i++) { %>
+					<input name="option-detail" type="hidden" data-name="<%= data.vote.options[i].name %>" data-count="<%= data.vote.options[i].count %>">
+				<% } %>
+			</div>
+			<div id="chart"></div>
 		</div>
 
 		<a href="#" onclick="location.href = document.referrer;">back</a>
@@ -52,7 +54,7 @@
 				e.stopPropagation()
 
 				var params = {"id" : $("input[name=id]").val(),
-				"option" : $("select[name=option]").val()};
+							"option" : $("select[name=option]").val()};
 
 				$.ajax({
 					type: 'POST',
@@ -65,9 +67,11 @@
 						$(".list-options").empty();
 
 						for (var i = 0; i < options.length; i++) {
-							console.log(options[i]);
-							$(".list-options").append('<p>' + options[i] + '</p>');
+							var data = '<input name="option-detail" type="hidden" data-name="' + options[i].name + '" data-count="' + options[i].count + '">'
+							$(".list-options").append(data);
 						}
+
+						showChart();
 					},
 					error: function(err) {
 						console.log(err);
@@ -75,6 +79,32 @@
 					}
 				});
 			});
+		</script>
+
+		<script src="https://code.highcharts.com/js/highcharts.js"></script>
+		<script src="https://code.highcharts.com/js/modules/exporting.js"></script>
+
+		<script>
+			showChart();
+
+			function showChart() {
+				var data = [];
+				$('input[name=option-detail]').map(function() {
+					data.push([$(this).attr('data-name'), parseInt($(this).attr('data-count')), false]);
+				});
+
+				Highcharts.chart('chart', {
+					title : {
+						text: null
+					},
+					series: [{
+						name: 'count',
+						type: 'pie',
+						allowPointSelect: true,
+						data: data
+					}]
+				});
+			}
 		</script>
 
 	</body>
