@@ -74,8 +74,11 @@
 						showChart();
 					},
 					error: function(err) {
-						console.log(err);
-						alert('err!');
+						if (err.responseJSON) {
+							alert(err.responseJSON.error);
+						} else {
+							console.log(err);
+						}
 					}
 				});
 			});

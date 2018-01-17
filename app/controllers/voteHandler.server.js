@@ -1,6 +1,7 @@
 'use strict';
 
 var Votes = require('../models/votes.js');
+var Picks = require('../models/picks.js');
 
 function VoteHandler () {
 
@@ -55,16 +56,58 @@ function VoteHandler () {
 
 
 	this.pickOneOption = function (req, res) {
+		//Picks.find({'pick.vote_id':req.body.id}).exec(function(err, result) {console.log(result)})
 
-		Votes
-		.findOneAndUpdate(
-			{_id : req.body.id, 'vote.options._id' : req.body.option},
-			{$inc : {'vote.options.$.count' : 1}},
-			{new: true})
-		.exec(function (err, result) {
-			if (err) {throw err;}
-			res.json(result);
-		});
+		// check whether user voted
+		if (req.user) {
+			Picks
+			.find({ 'pick.vote_id': req.body.id, 'pick.user_id': req.user._id })
+			.exec(function(err, result) {
+				if (err) {throw err;}
+				if (result.length != 0) {
+					res.status(500).send({error: '50000[user-voted]: You can only vote once a poll.'});
+					return;
+				}
+				saveNewPick();
+			});
+		} else {
+			Picks
+			.find({ 'pick.vote_id': req.body.id, 'pick.ip': req.connection.remoteAddress })
+			.exec(function(err, result) {
+				if (err) {throw err;}
+				if (result.length != 0) {
+					res.status(500).send({error: '50001[ip-voted]: You can only vote once a poll.'});
+					return;
+				}
+				saveNewPick();
+			});
+		}
+
+
+		function saveNewPick() {
+			var data = {
+				user_id: req.user? req.user._id : null,
+				option_id: req.body.option,
+				vote_id : req.body.id,
+				ip: req.connection.remoteAddress
+			}
+
+			Picks
+			.create({pick : data}, function(err, newPick) {
+				if (err) { res.json(err); }
+
+				// after new pick saved, update vote
+				Votes
+				.findOneAndUpdate(
+					{_id : req.body.id, 'vote.options._id' : req.body.option},
+					{$inc : {'vote.options.$.count' : 1}, $push : {'vote.picks' : newPick}},
+					{new: true})
+				.exec(function (err, result2) {
+					if (err) {throw err;}
+					res.json(result2);
+				});
+			});
+		}
 
 	};
 
