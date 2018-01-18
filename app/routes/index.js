@@ -86,6 +86,13 @@ module.exports = function (app, passport) {
 
 	app.route('/vote/my')
 		.get(voteHandler.getMyVotes);
+
+	// for db check
+	app.route('/vote/dbcheck/get/:schema')
+		.get(voteHandler.DBCheckGet);
+
+	app.route('/vote/dbcheck/remove/:schema')
+		.get(voteHandler.DBCheckDeleteAll);
 };
 
 

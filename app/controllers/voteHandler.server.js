@@ -113,12 +113,18 @@ function VoteHandler () {
 
 
 	this.deleteVote = function (req, res) {
-		Votes
-		.remove({ _id : req.body.id, 'vote.author' : req.body.author })
-		.exec(function (err, result) {
+		Picks
+		.remove({ 'pick.vote_id' : req.body.id })
+		.exec(function(err, result) {
 			if (err) { throw err; }
 
-			res.redirect('/');
+			Votes
+			.remove({ _id : req.body.id, 'vote.author' : req.body.author })
+			.exec(function (err2, result2) {
+				if (err2) { throw err2; }
+
+				res.redirect('/');
+			});
 		});
 	};
 
@@ -132,6 +138,45 @@ function VoteHandler () {
 			res.render(process.cwd() + '/public/vote/my', { data : result, user : req.user });
 		});
 	};
+
+
+
+	// for db check
+	this.DBCheckGet = function(req, res) {
+		var schema = req.params.schema;
+		switch (schema) {
+			case 'votes':
+				Votes.find().exec(function(err, result) {
+					if (err) { throw err; }
+					return res.json(result);
+				});
+				break;
+			case 'picks':
+				Picks.find().exec(function(err, result) {
+					if (err) { throw err; }
+					return res.json(result);
+				});
+				break;
+		}
+	}
+
+	this.DBCheckDeleteAll = function(req, res) {
+		var schema = req.params.schema;
+		switch (schema) {
+			case 'votes':
+				Votes.remove().exec(function(err, result) {
+					if (err) { throw err; }
+					return res.json(result);
+				});
+				break;
+			case 'picks':
+				Picks.remove().exec(function(err, result) {
+					if (err) { throw err; }
+					return res.json(result);
+				});
+				break;
+		}
+	}
 
 }
 
