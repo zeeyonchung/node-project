@@ -85,7 +85,7 @@ module.exports = function (app, passport) {
 		.post(isLoggedIn, voteHandler.deleteVote);
 
 	app.route('/vote/my')
-		.get(voteHandler.getMyVotes);
+		.get(isLoggedIn, voteHandler.getMyVotes);
 
 	// for db check
 	app.route('/vote/dbcheck/get/:schema')

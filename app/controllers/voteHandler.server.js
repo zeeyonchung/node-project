@@ -90,7 +90,7 @@ function VoteHandler () {
 				option_id: req.body.option,
 				vote_id : req.body.id,
 				ip: req.connection.remoteAddress
-			}
+			};
 
 			Picks
 			.create({pick : data}, function(err, newPick) {
@@ -109,7 +109,7 @@ function VoteHandler () {
 			});
 		}
 
-	};
+	};// end pickOneOption
 
 
 	this.deleteVote = function (req, res) {
@@ -158,7 +158,7 @@ function VoteHandler () {
 				});
 				break;
 		}
-	}
+	};
 
 	this.DBCheckDeleteAll = function(req, res) {
 		var schema = req.params.schema;
@@ -176,7 +176,7 @@ function VoteHandler () {
 				});
 				break;
 		}
-	}
+	};
 
 }
 
