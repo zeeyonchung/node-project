@@ -15,6 +15,10 @@
 }
 
 /****** Main Styling ******/
+* {
+	margin: 0;
+	padding: 0;
+}
 
 body {
 	font-family: 'Roboto', sans-serif;
@@ -25,7 +29,7 @@ body {
 }
 
 a {
-		  text-decoration: none;
+	text-decoration: none;
 }
 
 header {
@@ -36,13 +40,15 @@ header {
 }
 
 .container {
-		  text-align: center;
+	text-align: center;
+	margin-top: 30px;
+	position: relative;
 }
 .container p {
 	text-align: center;
 	padding: 0;
+	/*margin-top: 30px;*/
 }
-
 .hide {
 		  display: none;
 }
@@ -139,7 +145,6 @@ img {
 	padding: 10px 5px;
 	width: 100px;
 	font-weight: 500;
-
 }
 
 .btn:focus {	/* Remove outline when hovering over button */
@@ -152,10 +157,10 @@ img {
 	-moz-transform: scale(0.9, 0.9);
 }
 
-.btn-delete {	/* Styling for delete button */
+/*.btn-delete {
 	background-color: #ECEFF1;
 	color: #212121;
-}
+}*/
 
 #click-nbr {
 	font-weight: 400;
@@ -218,6 +223,9 @@ span {
 .list .btn.title {
 	width: 65%;
 	height: 42px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 10px 15px;
 }
 
 .list .btn {
@@ -243,8 +251,63 @@ span {
 }
 
 /*********** show ***********/
+
+.container .content-wrap {
+	min-height: 400px;
+	padding-bottom: 70px;
+	background-color: #f7f7f7;
+	border-radius: 5px;
+}
+.container .content-wrap .text-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container .content-wrap .text-wrap div:first-of-type {
+	width: 100%;
+}
 .show select {
 	display: block;
-	width: 20%;
 	margin: 0 auto;
+}
+.show .fb-share-button {
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+}
+.show .btn-back {
+	position: absolute;
+	left: 15px;
+	bottom: 15px;
+}
+.show .btn-delete {
+	position: absolute;
+	left: 65px;
+	bottom: 15px;
+}
+.show .btn-pick {
+	margin-top: 9px;
+}
+.show .highcharts-background {
+	fill: #ffffff00;
+}
+.show h3 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/*********** new ***********/
+.new h4 {
+	margin-top: 15px;
+}
+
+.new .btn-submit {
+	display: block;
+	margin: 0 auto;
+	margin-top: 20px;
+	width: 200px;
+}
+
+.new input[name=title], .new textarea[name=options] {
+	min-width: 400px;
 }

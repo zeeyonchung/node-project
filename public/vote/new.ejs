@@ -5,22 +5,30 @@
 	<head>
 		<title>Voting App - ZEEYON CHUNG</title>
 
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
 	</head>
 
-	<body>
+	<body class="new">
+		<%- include('../common/header', { 'user' : user }); %>
+
 		<div class="container">
 			<form action="/vote/add" id="voteForm">
+				<h4>TITLE</h4>
 				<input type="text" name="title">
+				<h4>OPTIONS</h4>
+				<p>seperated by comma(,)</p>
 				<textarea name="options"></textarea>
 				<input type="hidden" name="author" value="<%= user._id %>">
 
-				<input type="submit" value="MAKE!">
+				<input class="btn-submit" type="submit" value="MAKE!">
 			</form>
 		</div>
 
 		<script type="text/javascript" src="/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/tether.min.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	</body>
 

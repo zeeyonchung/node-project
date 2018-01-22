@@ -27,7 +27,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0-alpha.6",
     "dotenv": "^1.2.0",
     "ejs": "^2.5.7",
     "express": "^4.12.4",
@@ -37,6 +37,7 @@
     "mongoose": "^4.1.0",
     "passport": "^0.3.0",
     "passport-facebook": "^2.1.1",
-    "passport-github": "^1.0.0"
+    "passport-github": "^1.0.0",
+    "tether": "^1.4.3"
   }
 }

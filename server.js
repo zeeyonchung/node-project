@@ -28,6 +28,7 @@ app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
 app.use('/js', express.static(process.cwd() + '/node_modules/jquery/dist'));
+app.use('/js', express.static(process.cwd() + '/node_modules/tether/dist/js'));
 app.use('/js', express.static(process.cwd() + '/node_modules/bootstrap/dist/js'));
 app.use('/css', express.static(process.cwd() + '/node_modules/bootstrap/dist/css'));
 

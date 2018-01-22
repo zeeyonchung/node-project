@@ -65,7 +65,7 @@ function VoteHandler () {
 			.exec(function(err, result) {
 				if (err) {throw err;}
 				if (result.length != 0) {
-					res.status(500).send({error: '50000[user-voted]: You can only vote once a poll.'});
+					res.status(403).send({error: '50000[user-voted]: You can only vote once a poll.'});
 					return;
 				}
 				saveNewPick();
@@ -76,7 +76,7 @@ function VoteHandler () {
 			.exec(function(err, result) {
 				if (err) {throw err;}
 				if (result.length != 0) {
-					res.status(500).send({error: '50001[ip-voted]: You can only vote once a poll.'});
+					res.status(403).send({error: '50001[ip-voted]: You can only vote once a poll.'});
 					return;
 				}
 				saveNewPick();
