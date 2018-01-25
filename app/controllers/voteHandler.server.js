@@ -72,7 +72,7 @@ function VoteHandler () {
 			});
 		} else {
 			Picks
-			.find({ 'pick.vote_id': req.body.id, 'pick.ip': req.connection.remoteAddress })
+			.find({ 'pick.vote_id': req.body.id, 'pick.ip': req.headers['x-forwarded-for'].split(',')[0] })
 			.exec(function(err, result) {
 				if (err) {throw err;}
 				if (result.length != 0) {
@@ -89,7 +89,7 @@ function VoteHandler () {
 				user_id: req.user? req.user._id : null,
 				option_id: req.body.option,
 				vote_id : req.body.id,
-				ip: req.connection.remoteAddress
+				ip: req.headers['x-forwarded-for'].split(',')[0]
 			};
 
 			Picks
