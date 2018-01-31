@@ -38,7 +38,7 @@ function VoteHandler () {
 		}}, function (err, result) {
 			if (err) { res.json(err); }
 
-			res.redirect('/');
+			res.redirect('/vote');
 		});
 	};
 
@@ -123,7 +123,7 @@ function VoteHandler () {
 			.exec(function (err2, result2) {
 				if (err2) { throw err2; }
 
-				res.redirect('/');
+				res.redirect('/vote');
 			});
 		});
 	};

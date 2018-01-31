@@ -8,23 +8,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		<link href="/public/css/pin_main.css" rel="stylesheet" type="text/css">
 	</head>
 
-	<body class="new">
-		<%- include('../common/header_vote', { 'user' : user }); %>
+	<body class="list">
+		<%- include('../common/header_pin', { 'user' : user }); %>
 
 		<div class="container">
-			<form action="/vote/add" id="voteForm">
-				<h4>TITLE</h4>
-				<input type="text" name="title">
-				<h4>OPTIONS</h4>
-				<p>seperated by comma(,)</p>
-				<textarea name="options"></textarea>
-				<input type="hidden" name="author" value="<%= user._id %>">
+			<div>
 
-				<input class="btn-submit" type="submit" value="MAKE!">
-			</form>
+			</div>
 		</div>
 
 		<script type="text/javascript" src="/js/jquery.min.js"></script>
@@ -33,3 +26,6 @@
 	</body>
 
 </html>
+
+
+<!-- https://www.npmjs.com/package/ejs -->

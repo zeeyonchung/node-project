@@ -50,8 +50,8 @@ module.exports = function (passport) {
 			});
 		});
 	}));
-	
-	
+
+
 	passport.use(new FacebookStrategy({
 		clientID: configAuth.facebookAuth.clientID,
 		clientSecret: configAuth.facebookAuth.clientSecret,
@@ -69,7 +69,7 @@ module.exports = function (passport) {
 					return done(null, user);
 				} else {
 					var newUser = new User();
-                                                  
+
 					newUser.facebook.id = profile.id;
 					newUser.facebook.username = profile.username;
 					newUser.facebook.displayName = profile.displayName;

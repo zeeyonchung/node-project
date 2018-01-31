@@ -1,8 +1,8 @@
 'use strict';
 
 var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var VoteHandler = require(path + '/app/controllers/voteHandler.server.js');
+var PinHandler = require(path + '/app/controllers/pinHandler.server.js');
 
 module.exports = function (app, passport) {
 
@@ -14,11 +14,13 @@ module.exports = function (app, passport) {
 		}
 	}
 
-	var clickHandler = new ClickHandler();
 	var voteHandler = new VoteHandler();
+	var pinHandler = new PinHandler();
 
 	app.route('/')
-			.get(voteHandler.getVotes);
+		.get(function (req, res) {
+			res.render(process.cwd() + '/public/index', { user : req.user });
+		});
 
 	app.route('/login')
 		.get(function (req, res) {
@@ -28,45 +30,33 @@ module.exports = function (app, passport) {
 	app.route('/logout')
 		.get(function (req, res) {
 			req.logout();
-			res.redirect('/');
+			res.redirect(req.headers.referer);
 		});
 
-	app.route('/profile')
-		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/profile.html');
-		});
+	// app.route('/profile')
+	// 	.get(isLoggedIn, function (req, res) {
+	// 		res.sendFile(path + '/public/profile.html');
+	// 	});
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
 			res.json(req.user);
 		});
 
-	app.route('/auth/github')
-		.get(passport.authenticate('github'));
-
-	app.route('/auth/github/callback')
-		.get(passport.authenticate('github', {
-			successRedirect: '/',
-			failureRedirect: '/login'
-		}));
-
 	app.route('/auth/facebook')
 		.get(passport.authenticate('facebook'));
 
 	app.route('/auth/facebook/callback')
-		.get(passport.authenticate('facebook', {
-			successRedirect: '/',
-			failureRedirect: '/login'
-		}));
-
-	app.route('/api/:id/clicks')
-		.get(isLoggedIn, clickHandler.getClicks)
-		.post(isLoggedIn, clickHandler.addClick)
-		.delete(isLoggedIn, clickHandler.resetClicks);
+		.get( passport.authenticate('facebook', {failureRedirect: '/login'}), function(req, res) {
+			res.redirect(req.headers.referer);
+		});
 
 	/*
 	* for Voting App
 	*/
+	app.route('/vote')
+		.get(voteHandler.getVotes);
+
 	app.route('/vote/new')
 		.get(isLoggedIn, function (req, res) {
 			res.render(path + '/public/vote/new', { 'user' : req.user });
@@ -93,6 +83,20 @@ module.exports = function (app, passport) {
 
 	app.route('/vote/dbcheck/remove/:schema')
 		.get(voteHandler.DBCheckDeleteAll);
+
+
+	/*
+	* for Pinterest Clone
+	*/
+	app.route('/pin')
+		.get(pinHandler.getPins);
+
+	app.route('/pin/add')
+		.post(isLoggedIn, pinHandler.addPin);
+
+	// for db check
+	app.route('/pin/dbcheck/get/:schema')
+		.get(pinHandler.DBCheckGet);
 };
 
 
