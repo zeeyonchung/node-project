@@ -11,7 +11,7 @@
 					<a class="nav-link" href="/pin">All</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">My Pics</a>
+					<a class="nav-link" href="/pin/my">My Pics</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="modal" data-target="#myModal" href="#">Add a Pic</a>
@@ -38,14 +38,15 @@
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<form action="/pin/add" method="post">
+		<form action="/pin/add" method="post" enctype="multipart/form-data">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">Add a Pic</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<input name="imgPath" type="text" class="form-control" placeholder="Pic url..."/>
+					<!--<input name="imgPath" type="text" class="form-control" placeholder="Pic url..."/>-->
+					<input name="imgPath" type="file" class="form=control"/>
 					<input name="description" type="text" class="form-control" placeholder="Pic description..."/>
 				</div>
 				<div class="modal-footer">

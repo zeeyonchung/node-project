@@ -1,8 +1,6 @@
 'use strict';
 
 var path = process.cwd();
-var VoteHandler = require(path + '/app/controllers/voteHandler.server.js');
-var PinHandler = require(path + '/app/controllers/pinHandler.server.js');
 
 module.exports = function (app, passport) {
 
@@ -10,12 +8,9 @@ module.exports = function (app, passport) {
 		if (req.isAuthenticated()) {
 			return next();
 		} else {
-			res.redirect('/login');
+			res.redirect('/auth/facebook');
 		}
 	}
-
-	var voteHandler = new VoteHandler();
-	var pinHandler = new PinHandler();
 
 	app.route('/')
 		.get(function (req, res) {
@@ -51,52 +46,6 @@ module.exports = function (app, passport) {
 			res.redirect(req.headers.referer);
 		});
 
-	/*
-	* for Voting App
-	*/
-	app.route('/vote')
-		.get(voteHandler.getVotes);
-
-	app.route('/vote/new')
-		.get(isLoggedIn, function (req, res) {
-			res.render(path + '/public/vote/new', { 'user' : req.user });
-		});
-
-	app.route('/vote/add')
-		.get(isLoggedIn, voteHandler.addVote);
-
-	app.route('/vote/show/:id')
-		.get(voteHandler.getVote);
-
-	app.route('/vote/pick')
-		.post(voteHandler.pickOneOption);
-
-	app.route('/vote/delete')
-		.post(isLoggedIn, voteHandler.deleteVote);
-
-	app.route('/vote/my')
-		.get(isLoggedIn, voteHandler.getMyVotes);
-
-	// for db check
-	app.route('/vote/dbcheck/get/:schema')
-		.get(voteHandler.DBCheckGet);
-
-	app.route('/vote/dbcheck/remove/:schema')
-		.get(voteHandler.DBCheckDeleteAll);
-
-
-	/*
-	* for Pinterest Clone
-	*/
-	app.route('/pin')
-		.get(pinHandler.getPins);
-
-	app.route('/pin/add')
-		.post(isLoggedIn, pinHandler.addPin);
-
-	// for db check
-	app.route('/pin/dbcheck/get/:schema')
-		.get(pinHandler.DBCheckGet);
 };
 
 

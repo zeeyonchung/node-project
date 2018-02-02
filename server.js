@@ -6,6 +6,12 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var multer = require('multer');
+var upload = multer({ dest: './uploads', limits: {filesize: 3 * 1024 * 1024} }); //3MB
+
+
+var routes_vote = require('./app/routes/routes_vote.js');
+var routes_pin = require('./app/routes/routes_pin.js');
 
 /* // for jquery
 const jsdom = require("jsdom");
@@ -31,6 +37,7 @@ app.use('/js', express.static(process.cwd() + '/node_modules/jquery/dist'));
 app.use('/js', express.static(process.cwd() + '/node_modules/tether/dist/js'));
 app.use('/js', express.static(process.cwd() + '/node_modules/bootstrap/dist/js'));
 app.use('/css', express.static(process.cwd() + '/node_modules/bootstrap/dist/css'));
+app.use('/uploads', express.static(process.cwd() + '/uploads'));
 
 app.use(session({
 	secret: 'secret',
@@ -44,7 +51,13 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+//app.use(upload.any());
+app.use(upload.single('imgPath'));
+//https://github.com/expressjs/multer
+
 routes(app, passport);
+routes_vote(app, passport);
+routes_pin(app, passport);
 
 var port = process.env.PORT || 8080;
 app.listen(port,  function () {

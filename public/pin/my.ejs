@@ -15,10 +15,7 @@
 		<%- include('../common/header_pin', { 'user' : user }); %>
 
 		<div class="container">
-			<% for (var i = 0; i < data.length; i++) { %>
-				<%= data[i] %>
-				<div><img src="/uploads/<%= data[i].pin.imgPath %>"></div>
-			<% } %>
+			<%= data %>
 		</div>
 
 		<script type="text/javascript" src="/js/jquery.min.js"></script>
@@ -27,6 +24,3 @@
 	</body>
 
 </html>
-
-
-<!-- https://www.npmjs.com/package/ejs -->
