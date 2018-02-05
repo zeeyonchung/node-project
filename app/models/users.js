@@ -13,7 +13,8 @@ var User = new Schema({
 	facebook: {
 		id: String,
 		displayName: String,
-		username: String
+		username: String,
+		profileUrl: String
 	}
 });
 

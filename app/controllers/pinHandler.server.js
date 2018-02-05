@@ -1,13 +1,27 @@
 'use strict';
 
 var Pins = require('../models/pins.js');
+var fs = require('fs');
 
 function PinHandler () {
 
 	this.getPins = function (req, res) {
-		Pins
-		.find()
-		.exec(function (err, result) {
+		// Pins
+		// .find()
+		// .exec(function (err, result) {
+		// 	if (err) { throw err; }
+
+		// 	res.render(process.cwd() + '/public/pin/index', { data : result, user : req.user });
+		// });
+
+		Pins.aggregate([
+			{$lookup: {
+				from: "users",
+				localField: "pin.author",
+				foreignField: "_id",
+				as: "pin.author"
+			}}
+		], function(err, result) {
 			if (err) { throw err; }
 
 			res.render(process.cwd() + '/public/pin/index', { data : result, user : req.user });
@@ -15,16 +29,40 @@ function PinHandler () {
 	};
 
 	this.getMyPins = function (req, res) {
-		Pins
-		.find({ 'pin.author' : req.user._id })
-		.exec(function (err, result) {
+		// Pins
+		// .find({ 'pin.author' : req.user._id })
+		// .exec(function (err, result) {
+		// 	if (err) { throw err; }
+
+		// 	res.render(process.cwd() + '/public/pin/index', { data : result, user : req.user });
+		// });
+
+		Pins.aggregate([
+			{$match: { 'pin.author': req.user._id }},
+			{$lookup: {
+				from: "users",
+				localField: "pin.author",
+				foreignField: "_id",
+				as: "pin.author"
+			}}
+		], function(err, result) {
 			if (err) { throw err; }
 
-			res.render(process.cwd() + '/public/pin/my', { data : result, user : req.user });
+			res.render(process.cwd() + '/public/pin/index', { data : result, user : req.user });
 		});
 	};
 
-	this.addPin = function(req, res, next) {
+	this.getPinDetail = function(req, res) {
+		Pins
+		.find({ _id : req.params.id })
+		.exec(function (err, result) {
+			if (err) { throw err; }
+
+			res.render(process.cwd() + '/public/pin/detail', { data : result, user : req.user });
+		});
+	};
+
+	this.addPin = function(req, res) {
 		Pins
 		.create({pin: {
 			author: req.user._id,
@@ -38,10 +76,25 @@ function PinHandler () {
 	};
 
 	this.deletePin = function (req, res) {
+		// Pins
+		// .remove({ _id : req.body.id })
+		// .exec(function(err, result) {
+		// 	if (err) { throw err; }
+
+		//	res.redirect('/pin');
+		// });
+
 		Pins
-		.remove({ 'pin._id' : req.body.id })
+		.findOneAndRemove({ _id : req.body.id })
 		.exec(function(err, result) {
 			if (err) { throw err; }
+
+			// delete image file
+			try {
+				fs.unlinkSync(process.cwd() + '/uploads/' + result.pin.imgPath);
+			} catch (err2) {
+				throw err2;
+			}
 
 			res.redirect('/pin');
 		});
@@ -51,18 +104,36 @@ function PinHandler () {
 	this.likePin = function (req, res) {
 		if (req.user) {
 			Pins
-			.find({ 'pin._id': req.body.id, 'pin.likes.user_id': req.user._id })
+			.find({ '_id': req.query.id, 'pin.likes.user_id': req.user._id })
 			.exec(function(err, result) {
-				if (err) {throw err;}
+				if (err) { throw err; }
 
-				console.log(result);
+				if (result.length != 0) {
+					// if user clicked like already, unlike
+					Pins
+					.findOneAndUpdate(
+						{'_id' : req.query.id},
+						{$pull : {'pin.likes' : {'user_id' : req.user._id}}},
+						{new : true})
+					.exec(function(err, result) {
+						if (err) { throw err; }
 
-				// if (result.length != 0) {
-				// 	// if user clicked like already, unlike
+						res.end();
+					});
 
-				// } else {
-				// 	// save new like
-				// }
+				} else {
+					// save new like
+					Pins
+					.findOneAndUpdate(
+						{'_id' : req.query.id},
+						{$push: {'pin.likes' : {'user_id' : req.user._id}}},
+						{new : true})
+					.exec(function(err, result) {
+						if (err) { throw err; }
+
+						res.end();
+					});
+				}
 
 			});
 		} else {

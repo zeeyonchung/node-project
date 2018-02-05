@@ -134,3 +134,88 @@ img {
 	color: #8e8e8e;
 	font-family: cursive;
 }
+
+
+
+/*************** index ***************/
+.grid-item {
+	width: 210px;
+	text-align: center;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.grid-item:hover {
+	/*-webkit-filter: brightness(80%);*/
+}
+
+.grid-item p {
+	word-wrap: break-word;
+	margin: 0;
+}
+
+.grid-item img {
+	width: 100%;
+	border-radius: 5px;
+}
+
+.grid-item .item-hover {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.22);
+	border-radius: 5px;
+	color: #f6f6f6;
+}
+
+.grid-item .item-hover a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	color: #f6f6f6;
+	text-decoration: none;
+}
+
+.grid-item .item-hover .description {
+	position: absolute;
+	bottom: 10px;
+	left: 14px;
+	width: 135px;
+	text-align: left;
+}
+
+.grid-item .item-hover .like {
+	width: 30px;
+	height: 30px;
+	background-color: #fff;
+	border-radius: 50%;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	color: #3b3b3b;
+	line-height: 31px;
+}
+
+.grid-item .item-hover .like:hover {
+	background-color: rgba(255, 255, 255, 0.69);
+}
+
+.grid-item .item-hover .profile {
+	text-align: left;
+	padding: 5px 11px;
+}
+
+.grid-item .item-hover .profile img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	float: left;
+}
+
+.grid-item .item-hover .profile .author {
+	margin-left: 6px;
+	font-size: 0.9em;
+}

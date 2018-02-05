@@ -28,7 +28,10 @@ module.exports = function (app, passport) {
 		.post(isLoggedIn, pinHandler.deletePin);
 
 	app.route('/pin/like')
-		.post(pinHandler.likePin);
+		.get(isLoggedIn, pinHandler.likePin);
+
+	app.route('/pin/detail/:id')
+		.get(pinHandler.getPinDetail);
 
 	// for db check
 	app.route('/pin/dbcheck/get/:schema')
@@ -36,4 +39,5 @@ module.exports = function (app, passport) {
 
 	app.route('/pin/dbcheck/remove/:schema')
 		.get(pinHandler.DBCheckDeleteAll);
+
 };

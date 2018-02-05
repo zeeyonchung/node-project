@@ -73,6 +73,7 @@ module.exports = function (passport) {
 					newUser.facebook.id = profile.id;
 					newUser.facebook.username = profile.username;
 					newUser.facebook.displayName = profile.displayName;
+					newUser.facebook.profileUrl = profile.profileUrl;
 
 					newUser.save(function (err) {
 						if (err) {

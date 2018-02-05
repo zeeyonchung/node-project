@@ -16,11 +16,16 @@
 
 		<div class="container">
 			<%= data %>
+			<form action="/pin/delete" method="post">
+				<input name="id" value="<%= data[0]._id %>" type="hidden"/>
+				<button type="submit" class="btn btn-default">delete</button>
+			</form>
 		</div>
 
 		<script type="text/javascript" src="/js/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/tether.min.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
 	</body>
 
 </html>

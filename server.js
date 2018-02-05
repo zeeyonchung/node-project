@@ -7,7 +7,7 @@ var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var upload = multer({ dest: './uploads', limits: {filesize: 3 * 1024 * 1024} }); //3MB
+var upload = multer({ dest: './uploads', limits: {filesize: 1 * 1024 * 1024} }); //1MB
 
 
 var routes_vote = require('./app/routes/routes_vote.js');
