@@ -32,9 +32,15 @@
 								</div>
 								<p class="description"><%= data[i].pin.description %></p>
 							</a>
-							<div class="like" data-id="<%= data[i]._id %>"><i class="far fa-heart"></i></div>
+							<% if (user && data[i].pin.likes.includes(user._id)) { %>
+								<div class="like" data-id="<%= data[i]._id %>"><i class="fas fa-heart"></i></div>
+							<% } else { %>
+								<div class="like" data-id="<%= data[i]._id %>"><i class="far fa-heart"></i></div>
+							<% } %>
 						</div>
 					</div>
+					<%= typeof data[i].pin.likes %>
+					<%= data[i].pin.likes.indexOf("5a51ff8360f3dd08fba0c7a3") %>
 				<% } %>
 			</div>
 		</div>

@@ -219,3 +219,10 @@ img {
 	margin-left: 6px;
 	font-size: 0.9em;
 }
+
+
+/**************** detail ****************/
+
+.detail .comments .depth1 {
+	padding-left: 30px;
+}

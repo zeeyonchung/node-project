@@ -5,11 +5,10 @@ var Schema = mongoose.Schema;
 
 var Pin = new Schema({
 	pin: {
-		_id: mongoose.Schema.Types.ObjectId,
 		author: mongoose.Schema.Types.ObjectId,
 		description: String,
 		imgPath: String,
-		likes: [{user_id: mongoose.Schema.Types.ObjectId}]
+		likes: [mongoose.Schema.Types.ObjectId] //user id
 	}
 });
 
