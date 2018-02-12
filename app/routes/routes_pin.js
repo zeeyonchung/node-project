@@ -36,6 +36,9 @@ module.exports = function (app, passport) {
 	app.route('/pin/comment/add')
 		.post(isLoggedIn, pinHandler.addComment);
 
+	app.route('/pin/comment/delete')
+		.post(isLoggedIn, pinHandler.deleteComment);
+
 	// for db check
 	app.route('/pin/dbcheck/get/:schema')
 		.get(pinHandler.DBCheckGet);

@@ -254,6 +254,16 @@ function PinHandler () {
 		});
 	};
 
+	this.deleteComment = function (req, res) {
+		Comments
+		.remove({ _id : req.body.id })
+		.exec(function(err, result) {
+			if (err) { throw err; }
+
+			res.json(result);
+		});
+	};
+
 	// for db check
 	this.DBCheckGet = function(req, res) {
 		var schema = req.params.schema;
