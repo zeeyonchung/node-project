@@ -43,6 +43,7 @@ header {
 	text-align: center;
 	margin-top: 30px;
 	position: relative;
+	margin-bottom: 40px;
 }
 .container p {
 	text-align: center;
@@ -50,7 +51,15 @@ header {
 	/*margin-top: 30px;*/
 }
 .hide {
-		  display: none;
+	display: none;
+}
+
+.btn {
+	cursor: pointer;
+}
+
+dl, ol, ul {
+	list-style: none;
 }
 
 /****** Header Styling ******/
@@ -120,11 +129,6 @@ header a ~ p {
 }
 
 /****** Logo Div Styling ******/
-
-img {
-	margin: 0 auto;
-	display: block;
-}
 
 .title-text {
 	padding: 0;
@@ -223,6 +227,79 @@ img {
 
 /**************** detail ****************/
 
+.detail .main-img {
+	margin: 10px auto 20px;
+	display: block;
+}
+
+.detail .like-wrap {
+	display: inline-block;
+}
+
+.detail .profile {
+	border: 1px solid #eee;
+	padding: 7px;
+	width: 300px;
+	margin: 0 auto;
+}
+
+.detail .profile img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.detail .profile .author {
+	margin-left: 8px;
+}
+
+.detail .btn-delete {
+	float: right;
+}
+
+.detail .comments {
+	margin-top: 27px;
+	width: 60%;
+	margin: 0 auto;
+}
+
+.detail .comments ul {
+	padding: 0 50px;
+	margin-bottom: 44px;
+}
+
+.detail .comments li {
+	clear: both;
+	border-bottom: 1px solid #f4f4f4;
+	line-height: 30px;
+}
+
+.detail .comments .content {
+	float: left;
+}
+
+.detail .comments .btn-wrap {
+	float: right;
+}
+
 .detail .comments .depth1 {
-	padding-left: 30px;
+	padding-left: 6px;
+}
+
+.detail .comments .depth1::before {
+	content: '└';
+	float: left;
+}
+
+.detail .comments .depth1 .content {
+	margin-left: 5px;
+}
+
+.detail .comments textarea {
+	width: 80%;
+	vertical-align: middle;
+}
+
+.detail .comments .comment-box {
+	clear: both;
 }

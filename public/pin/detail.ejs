@@ -9,6 +9,7 @@
 
 		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/public/css/pin_main.css" rel="stylesheet" type="text/css">
+		<link href="//use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 	</head>
 
 	<body class="detail">
@@ -16,19 +17,31 @@
 
 		<div class="container">
 			<div class="content">
-				<img src="/uploads/<%= data.pin.imgPath %>">
-				<p><%= data.pin.description %></p>
-				<!--<div class="profile">
+				<div class="like-wrap">
+					<% if (user && JSON.stringify(data.pin.likes).indexOf(user._id) > -1) { %>
+						<span class="like" data-id="<%= data._id %>"><i class="fas fa-heart"></i></span>
+					<% } else { %>
+						<span class="like" data-id="<%= data._id %>"><i class="far fa-heart"></i></span>
+					<% } %>
+					<span class="like-count"><%= data.pin.likes.length %></span>
+				</div>
+
+				<img class="main-img" src="/uploads/<%= data.pin.imgPath %>">
+
+				<p class="description"><%= data.pin.description %></p>
+
+				<div class="profile">
 					<% if (data.pin.author[0].facebook.profileUrl) { %>
 						<img src="<%= data.pin.author[0].facebook.profileUrl %>">
 					<% } else { %>
 						<img src="/uploads/profile.png">
 					<% } %>
 					<span class="author"><%= data.pin.author[0].facebook.displayName %></span>
-				</div>-->
-				<form action="/pin/delete" method="post">
+				</div>
+
+				<form id="delete-form" action="/pin/delete" method="post">
 					<input name="id" value="<%= data._id %>" type="hidden"/>
-					<button type="submit" class="btn btn-default">delete</button>
+					<a href="#" class="btn-delete" onclick="$('#delete-form').submit()">delete</a>
 				</form>
 
 				<div class="comments">
@@ -36,22 +49,23 @@
 					<ul>
 						<% for (var i = 0; i < data.comments.length; i++) { %>
 							<li class=<%= data.comments[i].comment.depth == 0 ? 'depth0' : 'depth1' %>>
-								<span id="<%= data.comments[i]._id %>"><%= data.comments[i].comment.content %></span>
-								<% if (user && JSON.stringify(data.comments[i].comment.author[0]._id) == JSON.stringify(user._id)) { %>
-									<span class="btn-cmt-delete" data-id="<%= data.comments[i]._id %>">&times;</span>
-								<% } %>
-								<% if (data.comments[i].comment.depth == 0) { %>
-									<span class="btn-reply" data-parent="<%= data.comments[i]._id %>">reply</span>
-								<% } %>
+								<span class="content" id="<%= data.comments[i]._id %>"><%= data.comments[i].comment.content %></span>
+								<div class="btn-wrap">
+									<% if (user && JSON.stringify(data.comments[i].comment.author[0]._id) == JSON.stringify(user._id)) { %>
+										<span class="btn-cmt-delete" data-id="<%= data.comments[i]._id %>">&times;</span>
+									<% } %>
+									<% if (data.comments[i].comment.depth == 0) { %>
+										<span class="btn-reply" data-parent="<%= data.comments[i]._id %>">reply</span>
+									<% } %>
+								</div>
 							</li>
 						<% } %>
 					</ul>
-					<hr>
 					<form action="/pin/comment/add" method="post" class="comment-box">
 						<textarea name="content"></textarea>
 						<input type="hidden" name="parent"/>
 						<input type="hidden" name="article" value="<%= data._id %>">
-						<button type="sumbit" <%= user? '': 'disabled' %>>submit</button>
+						<button class="btn btn-default" type="sumbit" <%= user? '': 'disabled' %>>submit</button>
 					</form>
 				</div>
 			</div>
@@ -65,12 +79,12 @@
 			$(document.body).on('click', '.btn-reply', function() {
 				var commentBox = $('.comment-box').first().clone();
 				commentBox.children('input[name="parent"]').val($(this).attr('data-parent'));
-				commentBox.appendTo($(this).parent('li'));
+				commentBox.appendTo($(this).parents('li'));
 				$(this).removeClass('btn-reply').addClass('btn-close-reply');
 			});
 
 			$(document.body).on('click', '.btn-close-reply', function() {
-				$(this).parent('li').children('.comment-box').remove();
+				$(this).parents('li').children('.comment-box').remove();
 				$(this).removeClass('btn-close-reply').addClass('btn-reply');
 			});
 		</script>
@@ -84,7 +98,7 @@
 					url: "/pin/comment/delete",
 					data: {'id' : elem.attr('data-id')},
 					success: function(result) {
-						elem.parent('li').remove();
+						elem.parents('li').remove();
 					}
 				});
 			});
@@ -93,6 +107,29 @@
 		<!--<script>
 			var data = <%- JSON.stringify(data) %>;
 		</script>-->
-	</body>
 
+		<script>
+			$('.like').click(function() {
+				var elem = $(this);
+				var count = Number($('.like-count').text());
+
+				$.ajax({
+					method: "GET",
+					url: "/pin/like",
+					data: {'id' : elem.attr('data-id')},
+					success: function(data) {
+						if (elem.children('.fa-heart').hasClass('far')) {
+							elem.children('.fa-heart').removeClass('far').addClass('fas');
+							$('.like-count').text(count + 1);
+						} else {
+							elem.children('.fa-heart').removeClass('fas').addClass('far');
+							$('.like-count').text(count - 1);
+						}
+
+					}
+				});
+			});
+		</script>
+
+	</body>
 </html>
